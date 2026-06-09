@@ -1,3 +1,14 @@
+# Roles and Business Purpose
+
+| Role | Business Purpose |
+|------|------------------|
+| System Administrator | Owns the overall KPI Management System, ensuring organizational structure, users, roles, and system settings are correctly maintained and governed. |
+| Department Manager | A department lead responsible for defining performance objectives, creating KPIs, assigning them to employees, and reviewing submitted measurements. |
+| Employee | An individual contributor responsible for executing assigned objectives, submitting KPI measurements, and monitoring personal performance progress. |
+| Executive | A senior decision-maker responsible for monitoring organizational performance through dashboards, reports, and strategic analytics without participating in operational data entry. |
+
+---
+
 # Permission Legend
 
 | Label | Meaning |
