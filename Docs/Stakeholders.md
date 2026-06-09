@@ -16,6 +16,7 @@
 | Own Only (Created) | User can only access records they personally created |
 | Own Only (Dept) | User can only access records within their department |
 | Own Only (Self) | User can only access their own profile or personal records |
+| Own Only (Assigned) | User can only access records explicitly assigned to them |
 | ✅ | Permission granted |
 | ❌ | Permission not granted |
 
@@ -38,16 +39,16 @@
 | | Delete | ✅ | ❌ | ❌ | ❌ |
 | | Approve/Reject | ❌ | ❌ | ❌ | ❌ |
 | **KPI** | Create | ✅ | ✅ | ❌ | ❌ |
-| | Read (Own) | ✅ | Own Only (Created) | Own Only (Self) |
+| | Read (Own) | ✅ | Own Only (Created) | Own Only (Assigned) | ❌ |
 | | Read (All) | ✅ | Own Only (Dept) | ❌ | ✅ |
 | | Update | ✅ | Own Only (Created) | ❌ | ❌ |
 | | Delete | ✅ | Own Only (Created) | ❌ | ❌ |
 | | Approve/Reject | ❌ | ❌ | ❌ | ❌ |
-| **Measurement** | Create | ✅ | ❌ | Own Only (Self) | ❌ |
-| | Read (Own) | ✅ | Own Only (Dept) | Own Only (Self) | ❌ |
+| **Measurement** | Create | ✅ | ❌ | Own Only (Assigned) | ❌ |
+| | Read (Own) | ✅ | Own Only (Dept) | Own Only (Assigned) | ❌ |
 | | Read (All) | ✅ | Own Only (Dept) | ❌ | ✅ |
-| | Update | ✅ | ❌ | Own Only (Self) | ❌ |
-| | Delete | ✅ | ❌ | Own Only (Self) | ❌ |
+| | Update | ✅ | ❌ | Own Only (Assigned) | ❌ |
+| | Delete | ✅ | ❌ | Own Only (Assigned) | ❌ |
 | | Approve/Reject | ❌ | ✅ | ❌ | ❌ |
 | **Notification** | Create | ❌ | ❌ | ❌ | ❌ |
 | | Read (Own) | Own Only (Self) | Own Only (Self) | Own Only (Self) | Own Only (Self) |
@@ -66,8 +67,8 @@
 2. **Managers can only modify KPIs they personally created.**
    This prevents one department manager from altering another manager's strategic objectives.
 
-3. **Employees can only access their own assigned KPIs and submitted measurements.**
-   They cannot modify KPI definitions or access other employees' performance data.
+3. **Employees can only access KPIs explicitly assigned to them and measurements submitted against those assignments.**
+   They cannot modify KPI definitions or access performance data belonging to other employees.
 
 4. **Measurement approval is performed exclusively by Department Managers.**
    Submitted measurements become official only after managerial review.
@@ -89,3 +90,6 @@
 
 10. **Approval/Reject permissions exist only for Measurements.**
     Departments, Users, KPIs, and Notifications do not participate in an approval workflow within the current business model.
+
+11. **Assignment-based permissions are distinct from ownership-based permissions.**
+    Employees do not own KPIs; they are granted access only to KPIs assigned to them and the measurements associated with those assignments.
