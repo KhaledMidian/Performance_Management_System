@@ -197,7 +197,7 @@ Post-condition:
 | ----------------------- | -------------------- | ------------------------------------------- | ----------------------------------- | ------------- |
 | DepartmentCreated       | System Administrator | New department is successfully created      | System Administrator                | In-App        |
 | UserCreated             | System Administrator | New user account is created                 | New User                            | In-App, Email |
-| KpiCreated              | Department Manager   | KPI is successfully created                 | Department Manager                  | In-App        |
+| KpiTargetMissed         | System               | Approved KPI performance falls below configured target threshold | Department Manager, Executive | In-App, Email |
 | KpiAssigned             | Department Manager   | KPI is assigned to an employee              | Assigned Employee                   | In-App, Email |
 | MeasurementSubmitted    | Employee             | Measurement enters Pending state            | Department Manager                  | In-App        |
 | MeasurementApproved     | Department Manager   | Measurement enters Approved state           | Employee                            | In-App, Email |
@@ -227,19 +227,21 @@ The system prevents creation when a Pending or Approved measurement already exis
 
 ---
 
-## Edge Case 2 — Manager Reviews After Employee Resubmission
+## Edge Case 2 — Concurrent Approval by Multiple Managers
 
 ### Scenario
 
-A manager opens a Pending measurement review screen while the employee submits an updated version before approval occurs.
+Two managers open the same Pending measurement simultaneously and both attempt to approve it.
 
 ### Risk
 
-Manager approves outdated information.
+The measurement could be reviewed twice, resulting in conflicting updates and inconsistent audit history.
 
 ### Resolution
 
-The system always reviews the latest submitted version and maintains version history for audit purposes.
+The system uses optimistic concurrency control through a RowVersion value. When the first manager successfully approves the measurement, the RowVersion changes. The second approval attempt fails because the submitted RowVersion no longer matches the current value.
+
+The manager receives a message indicating that the measurement has already been reviewed and must refresh the screen before taking further action.
 
 ---
 
@@ -288,6 +290,7 @@ Infinite approval loops with no accountability.
 ### Resolution
 
 The system permits unlimited resubmissions but preserves every rejection reason and review decision within the audit history.
+Each resubmission creates a new Measurement record. Previous records remain unchanged with their original state, timestamps, and rejection reason, creating an immutable append-only audit trail.
 
 ---
 
